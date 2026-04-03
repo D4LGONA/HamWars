@@ -4,7 +4,7 @@ public class PlaceableItem : ItemObject
 {
     [Header("Placement")]
     public float placeDistance = 5f;
-    public float surfaceOffset = 0.01f;
+    public float surfaceOffset = 0.03f;
 
     [Header("Snap")]
     public float gridSize = 1f;
@@ -89,43 +89,51 @@ public class PlaceableItem : ItemObject
 
         bool snapMode = hand.input != null && hand.input.SnapMode;
 
-        // 지금은 회전 없음. 나중에 R키 회전 넣으면 여기에 yaw 적용
+        // 나중에 회전 추가하면 여기서 rot 계산
         rot = Quaternion.identity;
 
-        // 박스콜라이더 기준으로 표면 밖으로 밀어낼 거리 계산
-        float pushOut = GetPushOutDistance(hit.normal, rot);
+        // pushOut 계산용으로 ghost를 먼저 hit.point 위치에 둠
+        ghost.transform.SetPositionAndRotation(hit.point, rot);
 
-        pos = hit.point + hit.normal * (pushOut + surfaceOffset);
+        float pushOut = GetPushOutDistance(hit.normal);
+        Vector3 candidatePos = hit.point + hit.normal * (pushOut + surfaceOffset);
 
-        // 월드 그리드 스냅
         if (snapMode)
         {
-            pos.x = Snap(pos.x, gridSize);
-            pos.y = Snap(pos.y, gridSize);
-            pos.z = Snap(pos.z, gridSize);
+            candidatePos.x = SnapFloor(candidatePos.x, gridSize);
+            candidatePos.y = SnapFloor(candidatePos.y, gridSize) + 0.5f;
+            candidatePos.z = SnapFloor(candidatePos.z, gridSize);
         }
 
+        pos = candidatePos;
         return true;
     }
 
-    float Snap(float value, float size)
+    float SnapFloor(float value, float size)
     {
         if (size <= 0f) return value;
-        return Mathf.Round(value / size) * size;
+        return Mathf.Floor(value / size) * size;
     }
 
-    float GetPushOutDistance(Vector3 worldNormal, Quaternion rootRotation)
+    float GetPushOutDistance(Vector3 worldNormal)
     {
-        if (ghostBoxes == null || ghostBoxes.Length == 0)
+        if (ghost == null || ghostBoxes == null || ghostBoxes.Length == 0)
             return 0f;
 
+        Vector3 rootPos = ghost.transform.position;
         float maxPush = 0f;
 
         foreach (var box in ghostBoxes)
         {
             if (box == null) continue;
 
-            // box의 월드축 기준 반크기 계산
+            // 루트 pivot -> box 중심까지의 월드 오프셋
+            Vector3 centerOffset = box.bounds.center - rootPos;
+
+            // normal 방향으로 center가 얼마나 나가 있는지
+            float centerProjection = Vector3.Dot(worldNormal, centerOffset);
+
+            // world normal 방향으로 box가 차지하는 반경
             Vector3 scaledSize = Vector3.Scale(box.size, box.transform.lossyScale);
             Vector3 extents = new Vector3(
                 Mathf.Abs(scaledSize.x) * 0.5f,
@@ -133,7 +141,6 @@ public class PlaceableItem : ItemObject
                 Mathf.Abs(scaledSize.z) * 0.5f
             );
 
-            // worldNormal을 해당 box 로컬 방향으로 변환
             Vector3 localNormal = box.transform.InverseTransformDirection(worldNormal);
             localNormal = new Vector3(
                 Mathf.Abs(localNormal.x),
@@ -141,11 +148,12 @@ public class PlaceableItem : ItemObject
                 Mathf.Abs(localNormal.z)
             );
 
-            // support function: 이 normal 방향으로 박스가 차지하는 반경
-            float push =
+            float supportRadius =
                 extents.x * localNormal.x +
                 extents.y * localNormal.y +
                 extents.z * localNormal.z;
+
+            float push = centerProjection + supportRadius;
 
             if (push > maxPush)
                 maxPush = push;
