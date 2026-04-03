@@ -1,20 +1,52 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3500614718078618998
+--- !u!1 &4853721531099397440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3916614624816758709}
+  m_Layer: 0
+  m_Name: Wood_Placeable
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3916614624816758709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4853721531099397440}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3765007537697747461}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3725962422836073966
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 3916614624816758709}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -50,7 +82,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
       propertyPath: m_Name
-      value: Wood
+      value: WoodItem
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -58,23 +90,28 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 36307522289175801}
+      addedObject: {fileID: 2493809607684924458}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2290426054732212517}
+      addedObject: {fileID: 6376086645218244871}
   m_SourcePrefab: {fileID: 100100000, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
---- !u!1 &4347600196513411111 stripped
+--- !u!4 &3765007537697747461 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
+  m_PrefabInstance: {fileID: 3725962422836073966}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4572330944384739519 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
-  m_PrefabInstance: {fileID: 3500614718078618998}
+  m_PrefabInstance: {fileID: 3725962422836073966}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &36307522289175801
+--- !u!64 &2493809607684924458
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4347600196513411111}
+  m_GameObject: {fileID: 4572330944384739519}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -87,16 +124,16 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: ffac166f642aea943a66195aa717c3c5, type: 3}
---- !u!114 &2290426054732212517
+--- !u!114 &6376086645218244871
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4347600196513411111}
+  m_GameObject: {fileID: 4572330944384739519}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63e56465da012e140a81fce1d1b2543f, type: 3}
@@ -104,6 +141,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: a09c76d956a831a438c0940b0cf63a8d, type: 2}
   placeDistance: 5
+  gridSize: 1
+  surfaceOffset: 0.01
+  snapYToGrid: 0
   ghostMaterial: {fileID: 2100000, guid: 97a720e8b419f6f47a970334d7a0dd11, type: 2}
   canPlaceColor: {r: 0.2, g: 0.95, b: 0.75, a: 0.45}
   cannotPlaceColor: {r: 1, g: 0.35, b: 0.25, a: 0.45}

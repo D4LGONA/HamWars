@@ -181,4 +181,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Data>k__BackingField: {fileID: 11400000, guid: a09c76d956a831a438c0940b0cf63a8d, type: 2}
   placeDistance: 4
+  gridSize: 1
+  surfaceOffset: 0.01
+  snapYToGrid: 0
   ghostMaterial: {fileID: 2100000, guid: 97a720e8b419f6f47a970334d7a0dd11, type: 2}
+  canPlaceColor: {r: 0.2, g: 0.95, b: 0.75, a: 0.45}
+  cannotPlaceColor: {r: 1, g: 0.35, b: 0.25, a: 0.45}

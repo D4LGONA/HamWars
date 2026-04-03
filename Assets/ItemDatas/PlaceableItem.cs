@@ -6,10 +6,9 @@ public class PlaceableItem : ItemObject
     public float placeDistance = 4f;
 
     [Header("Snap")]
-    public KeyCode snapKey = KeyCode.Q;
     public float gridSize = 1f;
-    public float surfaceOffset = 0.01f; // 바닥 z-fighting 방지용
-    public bool snapYToGrid = false;    // 필요하면 true
+    public float surfaceOffset = 0.01f;
+    public bool snapYToGrid = false;
 
     [Header("Ghost")]
     public Material ghostMaterial;
@@ -75,18 +74,14 @@ public class PlaceableItem : ItemObject
             return false;
         }
 
-        bool snapMode = Input.GetKey(snapKey);
+        bool snapMode = hand.input != null && hand.input.SnapMode;
 
         if (snapMode)
-        {
             pos = GetSnappedPosition(hit);
-        }
         else
-        {
             pos = hit.point + hit.normal * surfaceOffset;
-        }
 
-        rot = GetPlacementRotation(hit);
+        rot = Quaternion.identity;
         return true;
     }
 
@@ -101,11 +96,6 @@ public class PlaceableItem : ItemObject
             p.y = Snap(p.y, gridSize);
 
         return p;
-    }
-
-    Quaternion GetPlacementRotation(RaycastHit hit)
-    {
-        return Quaternion.identity;
     }
 
     float Snap(float value, float size)

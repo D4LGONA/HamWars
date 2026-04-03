@@ -35,13 +35,13 @@ public class InputManager : MonoBehaviour
         else
             ScrollDelta = 0;
 
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.V)) // V 토글 -> 3인칭 카메라/1인칭 카메라 전환
             IsThird = !IsThird;
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E)) // E 토글 -> 인벤토리 열기
             InventoryOpen = !InventoryOpen;
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q)) // Q 토글 -> 아이템 배치 스냅
             SnapMode = !SnapMode;
 
         float h = Input.GetAxisRaw("Horizontal");
