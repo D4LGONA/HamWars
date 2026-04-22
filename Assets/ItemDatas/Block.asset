@@ -15,5 +15,5 @@ MonoBehaviour:
   itemName: Block
   icon: {fileID: 0}
   maxStack: 99
-  heldPrefab: {fileID: 5114762678562051285, guid: c2cf5dd960189f641878f9246b34bc37, type: 3}
+  heldPrefab: {fileID: 3660105278559755145, guid: fb9f448e92de5264e809c62023bfecd7, type: 3}
   placeable: 1
