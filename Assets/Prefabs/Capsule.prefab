@@ -233,6 +233,8 @@ GameObject:
   - component: {fileID: 8204714879388188029}
   - component: {fileID: 6308551892750057857}
   - component: {fileID: 5611500728800058305}
+  - component: {fileID: 3642606645268562903}
+  - component: {fileID: 1774727999944804749}
   m_Layer: 7
   m_Name: Capsule
   m_TagString: Player
@@ -396,6 +398,7 @@ MonoBehaviour:
   pitchMin: -35
   pitchMax: 60
   mouseSensitivity: 1
+  Move: 1
 --- !u!114 &6308551892750057857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +430,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 7719401047664182417}
   inv: {fileID: 6308551892750057857}
+--- !u!114 &3642606645268562903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5871076930090499272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb52be8f06930147ae9de24dcedbc6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 8073302596123299435}
+  inputManager: {fileID: 7719401047664182417}
+  Inventory: {fileID: 6308551892750057857}
+  hand: {fileID: 1860145235853522272}
+  interactDistance: 5
+--- !u!114 &1774727999944804749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5871076930090499272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e169f20dc519bce428749a0cebc228f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  currentHp: 100
 --- !u!1 &7242790628411665898
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,3 +650,4 @@ MonoBehaviour:
   cam: {fileID: 8073302596123299435}
   input: {fileID: 7719401047664182417}
   execCooldownTime: 0.5
+  UIOpen: 0

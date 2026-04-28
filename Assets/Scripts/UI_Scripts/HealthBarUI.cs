@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthBarUI : MonoBehaviour
 {
     public Health target;
-    public Transform fill; // FillPanel
+    public Image fill; // 빨간 체력바 이미지
 
     void Start()
     {
@@ -23,9 +24,6 @@ public class HealthBarUI : MonoBehaviour
     void UpdateBar(int current, int max)
     {
         float ratio = (float)current / max;
-
-        Vector3 scale = fill.localScale;
-        scale.x = ratio;
-        fill.localScale = scale;
+        fill.fillAmount = ratio;
     }
 }

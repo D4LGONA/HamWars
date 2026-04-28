@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
     public Vector2 LookDelta { get; private set; }
     public bool Firedown { get; private set; }
     public bool RightClickDown { get; private set; }
-    public bool IsThird { get; private set; }
+    public bool IsThird { get; private set; } = false;
     public bool InventoryOpen { get; private set; }
     public int ScrollDelta { get; private set; }
 

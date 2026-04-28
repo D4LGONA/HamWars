@@ -4,7 +4,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour // 플레이어 자원 + 인벤토리 통합
 {
     [Header("Inventory")]
-    public int slotCount = 10;
+    public int slotCount = 6;
     [SerializeField] private ItemStack[] slots;
 
     [Header("Default Item")]
