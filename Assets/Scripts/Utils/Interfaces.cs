@@ -7,7 +7,7 @@ public interface IDroppable
 
 public interface IDamageable
 {
-    void Hit(Vector3 hitPoint, Vector3 hitNormal);
+    void Hit(float damage, Vector3 hitPoint, Vector3 hitNormal);
 }
 
 public interface IPickup

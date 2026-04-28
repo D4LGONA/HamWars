@@ -57,16 +57,27 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (!launched) return;
+
         var cp = collision.GetContact(0);
+
         if (impactDustPrefab != null)
         {
-            var ps = Instantiate(impactDustPrefab, cp.point, Quaternion.LookRotation(cp.normal));
+            var ps = Instantiate(
+                impactDustPrefab,
+                cp.point,
+                Quaternion.LookRotation(cp.normal)
+            );
+
             ps.Play();
-            //Destroy(ps.gameObject, vfxLife); 
+            Destroy(ps.gameObject, vfxLife);
         }
 
         var dmg = collision.collider.GetComponentInParent<IDamageable>();
         if (dmg != null)
-            dmg.Hit(cp.point, cp.normal);
+        {
+            dmg.Hit(damage, cp.point, cp.normal);
+        }
+
     }
 }

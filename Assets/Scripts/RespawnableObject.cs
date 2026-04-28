@@ -140,7 +140,7 @@ public class RespawnableObject : MonoBehaviour, IDamageable, IDroppable
         }
     }
 
-    public void Hit(Vector3 hitPoint, Vector3 hitNormal)
+    public void Hit(float damage, Vector3 hitPoint, Vector3 hitNormal)
     {
         if (broken) return;
         hitCount++;
