@@ -32,8 +32,18 @@ public class EnemyMovement : MonoBehaviour
         if (!agent.enabled || !agent.isOnNavMesh)
             return;
 
+        if (ShouldStopForAnimation())
+        {
+            StopMove();
+            return;
+        }
+
+        ResumeMove();
+
         bool isMoving = agent.velocity.sqrMagnitude > 0.01f && !agent.pathPending;
-        animator.SetBool("IsMoving", isMoving);
+
+        if (animator != null)
+            animator.SetBool("IsMoving", isMoving);
 
         if (agent.pathPending)
             return;
@@ -48,6 +58,36 @@ public class EnemyMovement : MonoBehaviour
                 PickAndGo();
             }
         }
+    }
+
+    private bool ShouldStopForAnimation()
+    {
+        if (animator == null)
+            return false;
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        return stateInfo.IsName("Hit") || stateInfo.IsName("Die");
+    }
+
+    private void StopMove()
+    {
+        if (agent == null)
+            return;
+
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+
+        if (animator != null)
+            animator.SetBool("IsMoving", false);
+    }
+
+    private void ResumeMove()
+    {
+        if (agent == null)
+            return;
+
+        agent.isStopped = false;
     }
 
     private void PickAndGo()
