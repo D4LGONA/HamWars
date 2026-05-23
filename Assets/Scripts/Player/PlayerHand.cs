@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
 
 public class PlayerHand : MonoBehaviour
@@ -7,6 +7,9 @@ public class PlayerHand : MonoBehaviour
     public Transform itemAnchor;   // Camera 밑 빈 오브젝트
     public Camera cam;
     public InputManager input;
+
+    [Header("IK")]
+    public RightHandItemIK rightHandItemIK;
 
     GameObject currentHeld;
     ItemObject currentItemObj;
@@ -23,6 +26,9 @@ public class PlayerHand : MonoBehaviour
         if (cam == null) cam = Camera.main;
         if (input == null) input = GetComponentInParent<InputManager>();
 
+        if (rightHandItemIK == null)
+            rightHandItemIK = GetComponentInParent<RightHandItemIK>();
+
         if (inv != null)
         {
             inv.OnSlotChanged += HandleSlotChanged;
@@ -33,6 +39,8 @@ public class PlayerHand : MonoBehaviour
     void OnDisable()
     {
         if (inv != null) inv.OnSlotChanged -= HandleSlotChanged;
+
+        SetHandIK(false);
     }
 
     void Update()
@@ -43,39 +51,66 @@ public class PlayerHand : MonoBehaviour
 
         if (input == null || input.Firedown == false) return;
         if (Time.time < lastExecTime) return;
+
         lastExecTime = Time.time + execCooldownTime;
+
         if (false == UIOpen)
             currentItemObj.Execute();
     }
 
     // ---------------- Equip ----------------
-    void HandleSlotChanged(int idx) => EquipFromSlot(idx);
+
+    void HandleSlotChanged(int idx)
+    {
+        EquipFromSlot(idx);
+    }
 
     void EquipFromSlot(int idx)
     {
         if (inv == null) return;
 
         var slots = inv.GetSlots();
+        if (slots == null) return;
         if (idx < 0 || idx >= slots.Length) return;
 
         ItemStack stack = slots[idx];
         ItemData item = stack.IsEmpty ? null : stack.item;
+
         Equip(item);
     }
-    
+
     void Equip(ItemData item) // 손에 든 장비 교체
     {
-        if (currentHeld != null) Destroy(currentHeld);
+        if (currentHeld != null)
+            Destroy(currentHeld);
+
         currentHeld = null;
         currentItemObj = null;
 
-        if (item == null || item.heldPrefab == null) return;
+        // 아이템 없거나 손에 들 프리팹 없으면 IK 끄기
+        if (item == null || item.heldPrefab == null)
+        {
+            SetHandIK(false);
+            return;
+        }
 
         currentHeld = Instantiate(item.heldPrefab, itemAnchor);
         currentHeld.transform.localPosition = Vector3.zero;
+        currentHeld.transform.localRotation = Quaternion.identity;
 
         currentItemObj = currentHeld.GetComponentInChildren<ItemObject>();
+
         if (currentItemObj != null)
             currentItemObj.Init(this, item);
+
+        // 아이템을 정상적으로 들었으면 IK 켜기
+        SetHandIK(true);
+    }
+
+    void SetHandIK(bool active)
+    {
+        if (rightHandItemIK == null) return;
+
+        rightHandItemIK.enableIK = active;
     }
 }

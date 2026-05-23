@@ -137,4 +137,12 @@ public class Inventory : MonoBehaviour // 플레이어 자원 + 인벤토리 통합
         OnChanged?.Invoke();
         return true;
     }
+    public ItemData GetCurrentItem()
+    {
+        if (slots == null) return null;
+        if (currentSlotIndex < 0 || currentSlotIndex >= slots.Length) return null;
+        if (slots[currentSlotIndex].IsEmpty) return null;
+
+        return slots[currentSlotIndex].item;
+    }
 }
